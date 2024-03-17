@@ -17,6 +17,18 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
+    'superadmin'=>[
+        'driver'=>'eloquent',
+        'model'=> App\Models\Superadmin::class,
+    ],
+    'admin'=>[
+        'driver'=>'eloquent',
+        'model'=> App\Models\Admin::class,
+    ],
+    'user'=>[
+        'driver'=>'eloquent',
+        'model'=> App\Models\User::class,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -37,6 +49,19 @@ return [
 
     'guards' => [
         'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+
+        'superadmin' => [
+            'driver' => 'session',
+            'provider' => 'superadmins',
+        ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+        'user' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
@@ -63,6 +88,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'superadmins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Superadmin::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [
@@ -97,6 +130,16 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+
+        'superadmins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Superadmin::class,
+        ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
+
     ],
 
     /*

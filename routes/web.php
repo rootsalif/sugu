@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/welcome/good', function () {
+    return view('back.auth');
 });
+
+
+
+Route::view('/page', 'back/page');
+Route::view('/', 'back/auth');
+Route::view('/partisant', 'back/auth-part');
