@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminRequest;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class SuperControler extends Controller
 {
@@ -15,13 +18,7 @@ class SuperControler extends Controller
         return view('back.pages.super.auth.login');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -54,6 +51,34 @@ class SuperControler extends Controller
         Auth::logout();
         return redirect()->route('super.login');
     }
+        /**
+     * Show the form for creating a new resource.
+     */
+    public function add()
+    {
+
+        $admins=Admin::where('status_admin', '!=','desable')->get();
+
+        return view('back.pages.super.admin.index', compact('admins'));
+    }
+
+    public function adminCreate(){
+
+        $admin= new Admin();
+        return view('back.pages.super.admin.create', compact('admin'));
+    }
+
+
+    public function adminStore(AdminRequest $request){
+
+        $data=$request->all();
+
+        $data=array_replace($data, array('password'=>Hash::make($request->password)));
+
+        Admin::create($data);
+
+        return redirect()->route('super.add');
+    }
 
     /**
      * Display the specified resource.
@@ -66,24 +91,38 @@ class SuperControler extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function adminEdit(Admin $admin)
     {
-        //
+        return view('back.pages.super.admin.create', compact('admin'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function adminUpdate(AdminRequest $request, Admin $admin)
     {
-        //
+        $data=$request->all();
+
+        $data=array_replace($data, array('password'=>Hash::make($request->password)));
+
+        $admin->update($data);
+
+        return redirect()->route('super.add');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+
+     public function adminDelete(Admin $admin)
+     {
+
+        return view('back.pages.super.admin.delete', compact('admin'));
+     }
+
+    public function adminDestroy(Admin $admin)
     {
-        //
+        $admin->status_admin='desable';
+        return redirect()->route('super.add');
     }
 }

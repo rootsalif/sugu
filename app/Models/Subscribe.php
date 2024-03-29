@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Subscribe extends Model
 {
     use HasFactory;
+
+    protected $fillable=[
+        'code_abonner',
+        'date_debut',
+        'date_fin',
+        'admin_id',
+        'superadmin',
+    ];
 }

@@ -22,7 +22,6 @@ return new class extends Migration
             $table->string('phone_admin');
             $table->string('address_admin')->nullable();
             $table->string('path_admin')->nullable();
-            $table->string('subscription');
             $table->enum('status_admin', ['Pending','desable', 'Active'])->default('Pending');
             $table->rememberToken();
             $table->timestamps();

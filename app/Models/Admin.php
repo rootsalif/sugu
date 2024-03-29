@@ -4,6 +4,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -23,9 +25,15 @@ class Admin extends Authenticatable
      */
     protected $fillable = [
         'name_admin',
+        'name_business_admin',
         'email',
         'password',
+        'email_verified_at',
+        'phone_admin',
+        'address_admin',
+        'path_admin',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,4 +54,12 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    // les scopes builder
+
+    public function scopeRecente(Builder $builder):Builder
+    {
+       return $builder->where('created_at', 'desc');
+    }
 }
