@@ -75,9 +75,9 @@ class SuperControler extends Controller
 
         $data=array_replace($data, array('password'=>Hash::make($request->password)));
 
-        Admin::create($data);
+        $admin=Admin::create($data);
 
-        return redirect()->route('super.add');
+        return redirect()->route('super.add')->with('success', $admin->name_admin.' à été bien crée!');
     }
 
     /**
@@ -107,7 +107,7 @@ class SuperControler extends Controller
 
         $admin->update($data);
 
-        return redirect()->route('super.add');
+        return redirect()->route('super.add')->with('success', $admin->name_admin.' à été bien modifier!');
     }
 
     /**
@@ -123,6 +123,7 @@ class SuperControler extends Controller
     public function adminDestroy(Admin $admin)
     {
         $admin->status_admin='desable';
-        return redirect()->route('super.add');
+        $admin->save();
+        return redirect()->route('super.add')->with('success', $admin->name_admin.' à été bien supprimer!');
     }
 }

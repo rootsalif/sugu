@@ -21,7 +21,7 @@ Route::prefix('super')->name('super.')->group(function(){
         Route::get('/add/{admin}/edit',[SuperControler::class, 'adminEdit'])->name('adminEdit');
         Route::put('/add/{admin}/edit', [SuperControler::class, 'adminUpdate'])->name('adminUpdate');
         Route::get('/add/{admin}/delete',[SuperControler::class, 'adminDelete'])->name('adminDelete');
-        Route::get('/add/{admin}/destroy',[SuperControler::class, 'adminDestroy'])->name('adminDestroy');
+        Route::post('/add/{admin}/destroy',[SuperControler::class, 'adminDestroy'])->name('adminDestroy');
         Route::get('/subscribe', [SubscribeControler::class, 'index'])->name('subscribe');
         Route::post('/subscribe', [SubscribeControler::class, 'store'])->name('subStore');
     });

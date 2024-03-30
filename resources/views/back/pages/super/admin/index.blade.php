@@ -8,6 +8,7 @@
     @endphp
 
     <div class="row">
+        @include('back.pages.include.alert-success')
         <div class="col-xl-4">
 
                 <h4>Ajouter un administrateur</h4>
