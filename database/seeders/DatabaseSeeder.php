@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Superadmin;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +22,13 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            Superadmin::class
+            SuperadminSeeder::class,
+            AdminSeeder::class,
+            EnterpriseSeeder::class,
+            RoleSeeder::class,
+            FamilieSeeder::class,
+            CategorieSeeder::class,
+            subCategorieSeeder::class,
         ]);
     }
 }

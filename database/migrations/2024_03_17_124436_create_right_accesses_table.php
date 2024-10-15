@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('right_accesses', function (Blueprint $table) {
             $table->id();
+            $table->string('label_right_accesse');
+
+            $table->unsignedBigInteger('superadmin_id')->nullable();
+            $table->foreign('superadmin_id')->references('id')->on('superadmins')->onDelete('cascade');
             $table->timestamps();
         });
     }

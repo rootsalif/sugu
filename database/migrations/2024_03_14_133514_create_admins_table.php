@@ -14,17 +14,21 @@ return new class extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
             $table->string('name_admin');
-            $table->string('name_business_admin')->nullable();
-            $table->string('domain_business_admin')->nullable();
+            $table->string('profession_admin');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone_admin');
             $table->string('address_admin')->nullable();
             $table->string('path_admin')->nullable();
+            $table->string('pass_id_admin')->nullable();
             $table->enum('status_admin', ['Pending','desable', 'Active'])->default('Pending');
             $table->rememberToken();
             $table->timestamps();
+
+            $table->unsignedBigInteger('superadmin_id');
+            $table->foreign('superadmin_id')->references('id')->on('superadmins')->onDelete('cascade');
+            
         });
     }
 

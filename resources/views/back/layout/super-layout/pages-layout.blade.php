@@ -9,6 +9,7 @@
     <meta charset="utf-8" />
     <title>@yield('titlePage')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
 
@@ -34,7 +35,7 @@
     <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css"></script>
     <script src="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css"></script>
-  @stack('stylsheets')
+  @stack('stylesheets')
 </head>
 
 <body data-layout="horizontal" data-topbar="dark" data-bs-theme="dark">
@@ -988,9 +989,9 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="topnav-pages">
 
-                                        <a href="apps-calendar.html" class="dropdown-item" data-key="t-calendar">Fonctionalités</a>
-                                        <a href="apps-chat.html" class="dropdown-item" data-key="t-chat">Droit d'accès</a>
-                                        <a href="apps-chat.html" class="dropdown-item" data-key="t-chat">Rôles</a>
+                                        <a href="{{ route('super.functional.index') }}" class="dropdown-item" data-key="t-calendar">Fonctionalités</a>
+                                        <a href="#" class="dropdown-item" data-key="t-chat">Droit d'accès</a>
+                                        <a href="{{ route('super.role.index') }}" class="dropdown-item" data-key="t-chat">Rôles</a>
                                         <a href="apps-file-manager.html" class="dropdown-item" data-key="t-filemanager">Tache</a>
 
 
@@ -1033,6 +1034,29 @@
                                             </div>
                                         </div>
                                     </div> --}}
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button">
+                                        <i class="icon nav-icon" data-eva="archive-outline"></i>
+                                        <span data-key="t-apps">Produits</span>
+                                        <div class="arrow-down"></div>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="topnav-pages">
+
+                                        <a href="{{ route('super.family.index') }}" class="dropdown-item" data-key="t-calendar">Famille</a>
+                                        <a href="{{ route('super.categorie.index') }}" class="dropdown-item" data-key="t-chat">Categorie</a>
+                                        <a href="{{ route('super.sub-categorie.index') }}" class="dropdown-item" data-key="t-chat">Sous Categorie</a>
+                                        {{-- <a href="apps-file-manager.html" class="dropdown-item" data-key="t-filemanager">Tache</a> --}}
+                                    </div>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="{{ route('super.family.add.index') }}" id="topnav-components" role="button">
+                                        <i class="icon nav-icon" data-eva="layers-outline"></i>
+                                        <span data-key="t-components">Ajout d'Article</span>
+                                        {{-- <div class="arrow-down"></div> --}}
+                                    </a>                            
                                 </li>
 
                                 {{-- <li class="nav-item dropdown">
@@ -1287,6 +1311,9 @@
 
     <script src="/back/assets/js/app.js"></script>
 
+    @stack('scripts')
+
+
     <script>
         new DataTable('#example', {
             layout: {
@@ -1296,10 +1323,8 @@
             }
         });
     </script>
-    @stack('scripts')
 
 </body>
 
 
-<!-- Mirrored from themesbrand.com/borex/layouts/layouts-horizontal-dark.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Mar 2024 18:28:01 GMT -->
 </html>

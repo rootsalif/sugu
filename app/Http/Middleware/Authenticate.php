@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Authenticate extends Middleware
 {
@@ -14,9 +15,23 @@ class Authenticate extends Middleware
     {
         // return $request->expectsJson() ? null : route('login');
         if(!$request->expectsJson()){
-            if($request->routeIs('super.*')){
+            
+            if($request->is('super/*')){
                 session('fail', 'You must login first');
                 return route('super.login');
+            }
+            else if($request->is('admin/*')){
+                session()->has('key')? session()->forget('key'):null;
+                session('fail', 'You must login first');
+                return route('admin.login');
+            }
+            else if(session()->has('key')){
+                session('fail', 'You must login first');
+                return route('admin.login');
+            }
+            else if($request->is('user/*')){
+                session('fail', 'You must login first');
+                return route('user.role.enterprise.index');
             }
         }
     }

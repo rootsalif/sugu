@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/welcome/good', function () {
-    return view('back.auth');
+Route::get('/test', function () {
+    return view('back.pages.admin.product.create');
 });
 
 

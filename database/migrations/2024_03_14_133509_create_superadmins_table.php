@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('address_super')->nullable();
             $table->rememberToken();
             $table->timestamps();
+
+            
         });
     }
 

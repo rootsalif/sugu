@@ -1,20 +1,25 @@
-
+@php
+    $admin=Auth::guard('admin')->user();
+   
+@endphp
 <!doctype html>
 <html lang="fr">
 
 
-<!-- Mirrored from themesbrand.com/borex/layouts/layouts-horizontal-dark.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Mar 2024 18:25:48 GMT -->
+<!-- Mirrored from themesbrand.com/OutInTraffic/layouts/layouts-horizontal-dark.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Mar 2024 18:25:48 GMT -->
 <head>
 
     <meta charset="utf-8" />
     <title>@yield('titlePage')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="/back/assets/images/favicon.ico">
-
+    <!-- gridjs css -->
+    <link rel="stylesheet" href="/back/assets/libs/gridjs/theme/mermaid.min.css">
     <!-- Bootstrap Css -->
     <link href="/back/assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
@@ -22,7 +27,18 @@
     <!-- App Css-->
     <link href="/back/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
-    @stack('stylsheets')
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.css"></script>
+    @stack('stylesheets')
 </head>
 
 <body data-layout="horizontal" data-topbar="dark" data-bs-theme="dark">
@@ -40,16 +56,19 @@
                                 <img src="/back/assets/images/logo-dark-sm.png" alt="" height="22">
                             </span>
                             <span class="logo-lg">
-                                <img src="/back/assets/images/logo-dark-sm.png" alt="" height="22">
+                                <h1> OutInTraffic</h1>
+                                {{-- <img src="/back/assets/images/logo-dark-sm.png" alt="" height="22"> --}}
                             </span>
                         </a>
 
                         <a href="index.html" class="logo logo-light">
                             <span class="logo-lg">
-                                <img src="/back/assets/images/logo-light.png" alt="" height="22">
+                                <h1> OutInTraffic</h1>
+                                {{-- <img src="/back/assets/images/logo-light.png" alt="" height="22"> --}}
                             </span>
                             <span class="logo-sm">
-                                <img src="/back/assets/images/logo-light-sm.png" alt="" height="22">
+                                <h1> OutInTraffic</h1>
+                                {{-- <img src="/back/assets/images/logo-light-sm.png" alt="" height="22"> --}}
                             </span>
                         </a>
                     </div>
@@ -62,9 +81,11 @@
                         </span>
                     </button>
 
-                    <div class="d-none d-sm-block ms-3 align-self-center">
+                    {{-- block title of page --}}
+
+                    {{-- <div class="d-none d-sm-block ms-3 align-self-center">
                         <h4 class="page-title">Horizontal</h4>
-                    </div>
+                    </div> --}}
 
                 </div>
 
@@ -84,8 +105,9 @@
                             </form>
                         </div>
                     </div>
+                    {{-- blog de lang --}}
 
-                    <div class="dropdown d-inline-block language-switch">
+                    {{-- <div class="dropdown d-inline-block language-switch">
                         <button type="button" class="btn header-item" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="header-lang-img" src="/back/assets/images/flags/us.jpg" alt="Header Language" height="16">
                         </button>
@@ -116,7 +138,7 @@
                                 <img src="/back/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
                             </a>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="dropdown d-none d-lg-inline-block">
                         <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -275,12 +297,12 @@
 
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item user text-start d-flex align-items-center" id="page-header-user-dropdown-v" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="rounded-circle header-profile-user" src="/back/assets/images/users/avatar-1.jpg" alt="Header Avatar">
+                            <img class="rounded-circle header-profile-user" src="{{$admin->urlImage()? $admin->urlImage(): '/back/src/image/user/famanta.png'}}" alt="Header Avatar">
                         </button>
                         <div class="dropdown-menu dropdown-menu-end pt-0">
                             <div class="p-3 border-bottom">
-                                <h6 class="mb-0">Jennifer Bennett</h6>
-                                <p class="mb-0 font-size-11 text-muted">jennifer.bennett@email.com</p>
+                                <h6 class="mb-0">{{$admin->name_admin}}</h6>
+                                <p class="mb-0 font-size-11 text-muted">{{$admin->email}}</p>
                             </div>
                             <a class="dropdown-item" href="contacts-profile.html"><i class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Profile</span></a>
                             <a class="dropdown-item" href="apps-chat.html"><i class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Messages</span></a>
@@ -289,7 +311,7 @@
                             <a class="dropdown-item" href="#"><i class="mdi mdi-wallet text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Balance : <b>$6951.02</b></span></a>
                             <a class="dropdown-item d-flex align-items-center" href="#"><i class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Settings</span><span class="badge bg-success-subtle text-success ms-auto">New</span></a>
                             <a class="dropdown-item" href="auth-lock-screen.html"><i class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Lock screen</span></a>
-                            <a class="dropdown-item" href="{{ route('super.logout') }}"><i class="mdi mdi-logout text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Logout</span></a>
+                            <a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="mdi mdi-logout text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Logout</span></a>
                         </div>
                     </div>
                 </div>
@@ -302,19 +324,23 @@
             <div class="navbar-brand-box">
                 <a href="index.html" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="/back/assets/images/logo-dark-sm.png" alt="" height="22">
+                        <h1> OutInTraffic</h1>
+                        {{-- <img src="/back/assets/images/logo-dark-sm.png" alt="" height="22"> --}}
                     </span>
                     <span class="logo-lg">
-                        <img src="/back/assets/images/logo-dark.png" alt="" height="22">
+                        <h1> OutInTraffic</h1>
+                        {{-- <img src="/back/assets/images/logo-dark.png" alt="" height="22"> --}}
                     </span>
                 </a>
 
                 <a href="index.html" class="logo logo-light">
                     <span class="logo-lg">
-                        <img src="/back/assets/images/logo-light.png" alt="" height="22">
+                        <h1> OutInTraffic</h1>
+                        {{-- <img src="/back/assets/images/logo-light.png" alt="" height="22"> --}}
                     </span>
                     <span class="logo-sm">
-                        <img src="/back/assets/images/logo-light-sm.png" alt="" height="22">
+                        <h1> OutInTraffic</h1>
+                        {{-- <img src="/back/assets/images/logo-light-sm.png" alt="" height="22"> --}}
                     </span>
                 </a>
             </div>
@@ -468,7 +494,7 @@
                                 <li><a href="auth-register.html" data-key="t-register">Register</a></li>
                                 <li><a href="auth-recoverpw.html" data-key="t-recover-password">Recover Password</a></li>
                                 <li><a href="auth-lock-screen.html" data-key="t-lock-screen">Lock Screen</a></li>
-                                <li><a href="{{ route('super.logout') }}" data-key="t-logout">Logout</a></li>
+                                <li><a href="{{ route('admin.logout') }}" data-key="t-logout">Logout</a></li>
                                 <li><a href="auth-confirm-mail.html" data-key="t-confirm-mail">Confirm Mail</a></li>
                                 <li><a href="auth-email-verification.html" data-key="t-email-verification">Email Verification</a></li>
                                 <li><a href="auth-two-step-verification.html" data-key="t-two-step-verification">Two Step Verification</a></li>
@@ -630,7 +656,7 @@
 
                 <div class="p-3 px-4 sidebar-footer">
                     <p class="mb-1 main-title">
-                        <script>document.write(new Date().getFullYear())</script> &copy; SUGU-LAFIA.
+                        <script>document.write(new Date().getFullYear())</script> &copy; OutInTraffic.
                     </p>
                     <p class="mb-0">Design & Develop by Themesbrand</p>
                 </div>
@@ -644,19 +670,23 @@
                     <div class="navbar-brand-box">
                         <a href="index.html" class="logo logo-dark">
                             <span class="logo-sm">
-                                <img src="/back/assets/images/logo-dark-sm.png" alt="" height="22">
+                                <h1> OutInTraffic</h1>
+                                {{-- <img src="/back/assets/images/logo-dark-sm.png" alt="" height="22"> --}}
                             </span>
                             <span class="logo-lg">
-                                <img src="/back/assets/images/logo-dark.png" alt="" height="22">
+                                <h1> OutInTraffic</h1>
+                                {{-- <img src="/back/assets/images/logo-dark.png" alt="" height="22"> --}}
                             </span>
                         </a>
 
                         <a href="index.html" class="logo logo-light">
                             <span class="logo-sm">
-                                <img src="/back/assets/images/logo-light-sm.png" alt="" height="22">
+                                <h1> OutInTraffic</h1>
+                                {{-- <img src="/back/assets/images/logo-light-sm.png" alt="" height="22"> --}}
                             </span>
                             <span class="logo-lg">
-                                <img src="/back/assets/images/logo-light.png" alt="" height="22">
+                                <h1> OutInTraffic</h1>
+                                {{-- <img src="/back/assets/images/logo-light.png" alt="" height="22"> --}}
                             </span>
                         </a>
                     </div>
@@ -665,13 +695,13 @@
                         <i class="fa fa-fw fa-bars"></i>
                     </button>
 
-                    <div class="d-none d-sm-block ms-2 align-self-center">
+                    {{-- <div class="d-none d-sm-block ms-2 align-self-center">
                         <h4 class="page-title">Horizontal</h4>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="d-flex">
-                    <div class="dropdown">
+                    {{-- <div class="dropdown">
                         <button type="button" class="btn header-item" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="icon-sm" data-eva="search-outline"></i>
                         </button>
@@ -685,9 +715,10 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <div class="dropdown d-inline-block language-switch">
+
+                    {{-- <div class="dropdown d-inline-block language-switch">
                         <button type="button" class="btn header-item" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="header-lang-img" src="/back/assets/images/flags/us.jpg" alt="Header Language" height="16">
                         </button>
@@ -718,9 +749,9 @@
                                 <img src="/back/assets/images/flags/russia.jpg" alt="user-image" class="me-1" height="12"> <span class="align-middle">Russian</span>
                             </a>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <div class="dropdown d-none d-lg-inline-block">
+                    {{-- <div class="dropdown d-none d-lg-inline-block">
                         <button type="button" class="btn header-item noti-icon" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="icon-sm" data-eva="grid-outline"></i>
                         </button>
@@ -779,7 +810,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item noti-icon" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -868,20 +899,20 @@
                         </div>
                     </div>
 
-                    <div class="dropdown d-inline-block">
+                    {{-- <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item noti-icon right-bar-toggle" id="right-bar-toggle">
                             <i class="icon-sm" data-eva="settings-outline"></i>
                         </button>
-                    </div>
+                    </div> --}}
 
                     <div class="dropdown d-inline-block">
                         <button type="button" class="btn header-item user text-start d-flex align-items-center" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="rounded-circle header-profile-user" src="/back/assets/images/users/avatar-1.jpg" alt="Header Avatar">
+                            <img class="rounded-circle header-profile-user" src="{{isset($admin->path_admin)? $admin->urlImage(): '/back/src/image/user/famanta.png'}}" alt="Image">
                         </button>
                         <div class="dropdown-menu dropdown-menu-end pt-0">
                             <div class="p-3 border-bottom">
-                                <h6 class="mb-0">Jennifer Bennett</h6>
-                                <p class="mb-0 font-size-11 text-muted">jennifer.bennett@email.com</p>
+                                <h6 class="mb-0">{{$admin->name_admin}}</h6>
+                                <p class="mb-0 font-size-11 text-muted">{{$admin->email}}</p>
                             </div>
                             <a class="dropdown-item" href="contacts-profile.html"><i class="mdi mdi-account-circle text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Profile</span></a>
                             <a class="dropdown-item" href="apps-chat.html"><i class="mdi mdi-message-text-outline text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Messages</span></a>
@@ -890,7 +921,7 @@
                             <a class="dropdown-item" href="#"><i class="mdi mdi-wallet text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Balance : <b>$6951.02</b></span></a>
                             <a class="dropdown-item d-flex align-items-center" href="#"><i class="mdi mdi-cog-outline text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Settings</span><span class="badge bg-success-subtle text-success ms-auto">New</span></a>
                             <a class="dropdown-item" href="auth-lock-screen.html"><i class="mdi mdi-lock text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Lock screen</span></a>
-                            <a class="dropdown-item" href="{{ route('super.logout') }}"><i class="mdi mdi-logout text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Logout</span></a>
+                            <a class="dropdown-item" href="{{ route('admin.logout') }}"><i class="mdi mdi-logout text-muted font-size-16 align-middle me-1"></i> <span class="align-middle">Logout</span></a>
                         </div>
                     </div>
                 </div>
@@ -902,73 +933,16 @@
                         <div class="collapse navbar-collapse" id="topnav-menu-content">
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-dashboard" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="{{route('admin.home')}}" id="topnav-dashboard" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="icon nav-icon" data-eva="grid-outline"></i>
-                                        <span data-key="t-dashboards">Dashboards</span>
-                                        <div class="arrow-down"></div>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="topnav-dashboard">
-                                        <a href="index.html" class="dropdown-item" data-key="t-ecommerce">Ecommerce</a>
-                                        <a href="dashboard-saas.html" class="dropdown-item" data-key="t-saas">Saas</a>
-                                        <a href="dashboard-crypto.html" class="dropdown-item" data-key="t-crypto">Crypto</a>
-                                    </div>
+                                        <span >Accueil</span>
+                                        {{-- <div class="arrow-down"></div> --}}
+                                    </a>                                 
                                 </li>
 
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-uielement" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="icon nav-icon" data-eva="cube-outline"></i>
-                                        <span data-key="t-elements">Elements</span>
-                                        <div class="arrow-down"></div>
-                                    </a>
 
-                                    <div class="dropdown-menu mega-dropdown-menu px-2 dropdown-mega-menu-xl" aria-labelledby="topnav-uielement">
-                                        <div class="ps-2 p-lg-0">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div>
-                                                        <div class="menu-title">Elements</div>
-                                                        <div class="row g-0">
-                                                            <div class="col-lg-4">
-                                                                <div>
-                                                                    <a href="ui-alerts.html" class="dropdown-item" data-key="t-alerts">Alerts</a>
-                                                                    <a href="ui-buttons.html" class="dropdown-item" data-key="t-buttons">Buttons</a>
-                                                                    <a href="ui-cards.html" class="dropdown-item" data-key="t-cards">Cards</a>
-                                                                    <a href="ui-carousel.html" class="dropdown-item" data-key="t-carousel">Carousel</a>
-                                                                    <a href="ui-dropdowns.html" class="dropdown-item" data-key="t-dropdowns">Dropdowns</a>
-                                                                    <a href="ui-grid.html" class="dropdown-item" data-key="t-grid">Grid</a>
-                                                                    <a href="ui-images.html" class="dropdown-item" data-key="t-images">Images</a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div>
-                                                                    <a href="ui-lightbox.html" class="dropdown-item" data-key="t-lightbox">Lightbox</a>
-                                                                    <a href="ui-modals.html" class="dropdown-item" data-key="t-modals">Modals</a>
-                                                                    <a href="ui-offcanvas.html" class="dropdown-item" data-key="t-offcanvas">Offcanvas</a>
-                                                                    <a href="ui-rangeslider.html" class="dropdown-item" data-key="t-range-slider">Range Slider</a>
-                                                                    <a href="ui-progressbars.html" class="dropdown-item" data-key="t-progress-bars">Progress Bars</a>
-                                                                    <a href="ui-sweet-alert.html" class="dropdown-item" data-key="t-sweet-alert">Sweet-Alert</a>
-                                                                    <a href="ui-tabs-accordions.html" class="dropdown-item" data-key="t-tabs-accordions">Tabs & Accordions</a>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-4">
-                                                                <div>
-                                                                    <a href="ui-typography.html" class="dropdown-item" data-key="t-typography">Typography</a>
-                                                                    <a href="ui-video.html" class="dropdown-item" data-key="t-video">Video</a>
-                                                                    <a href="ui-general.html" class="dropdown-item" data-key="t-general">General</a>
-                                                                    <a href="ui-colors.html" class="dropdown-item" data-key="t-colors">Colors</a>
-                                                                    <a href="ui-rating.html" class="dropdown-item" data-key="t-rating">Rating</a>
-                                                                    <a href="ui-notifications.html" class="dropdown-item" data-key="t-notifications">Notifications</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
 
-                                <li class="nav-item dropdown">
+                                {{-- <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button">
                                         <i class="icon nav-icon" data-eva="archive-outline"></i>
                                         <span data-key="t-apps">Apps</span>
@@ -1055,147 +1029,41 @@
                                             </div>
                                         </div>
                                     </div>
+                                </li> --}}
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="{{route('admin.user.index')}}" id="topnav-components" role="button">
+                                        <i class="mdi mdi-account-circle"></i>
+                                        <span>Utilisateurs</span>
+                                        {{-- <div class="arrow-down"></div> --}}
+                                    </a>
+
                                 </li>
 
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button">
-                                        <i class="icon nav-icon" data-eva="layers-outline"></i>
-                                        <span data-key="t-components">Components</span>
-                                        <div class="arrow-down"></div>
+                                        <i class="icon nav-icon" data-eva="archive-outline"></i>
+                                        <span>Produits</span>
+                                        {{-- <div class="arrow-down"></div> --}}
                                     </a>
-                                    <div class="dropdown-menu" aria-labelledby="topnav-components">
-                                        <div class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-form" role="button">
-                                                <span data-key="t-forms">Forms</span>
-                                                <div class="arrow-down"></div>
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="topnav-form">
-                                                <a href="form-elements.html" class="dropdown-item" data-key="t-form-elements">Form Elements</a>
-                                                <a href="form-layouts.html" class="dropdown-item" data-key="t-form-layouts">Form Layouts</a>
-                                                <a href="form-validation.html" class="dropdown-item" data-key="t-form-validation">Form Validation</a>
-                                                <a href="form-advanced.html" class="dropdown-item" data-key="t-form-advanced">Form Advanced</a>
-                                                <a href="form-editors.html" class="dropdown-item" data-key="t-form-editors">Form Editors</a>
-                                                <a href="form-uploads.html" class="dropdown-item" data-key="t-form-upload">Form File Upload</a>
-                                                <a href="form-wizard.html" class="dropdown-item" data-key="t-form-wizard">Form Wizard</a>
-                                                <a href="form-mask.html" class="dropdown-item" data-key="t-form-mask">Form Mask</a>
-                                            </div>
-                                        </div>
-                                        <div class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-table" role="button">
-                                                <span data-key="t-tables">Tables</span>
-                                                <div class="arrow-down"></div>
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="topnav-table">
-                                                <a href="tables-basic.html" class="dropdown-item" data-key="t-basic-tables">Basic Tables</a>
-                                                <a href="tables-advanced.html" class="dropdown-item" data-key="t-advanced-tables">Advance Tables</a>
-                                            </div>
-                                        </div>
 
-                                        <div class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-charts" role="button">
-                                                <span data-key="t-charts">Charts</span>
-                                                <div class="arrow-down"></div>
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="topnav-charts">
-                                                <div class="dropdown">
-                                                    <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-apex-charts" role="button">
-                                                        <span data-key="t-apex-charts">Apex Charts</span>
-                                                        <div class="arrow-down"></div>
-                                                    </a>
-                                                    <div class="dropdown-menu" aria-labelledby="topnav-apex-charts">
-                                                        <a href="charts-line.html" class="dropdown-item" data-key="t-line">Line</a>
-                                                        <a href="charts-area.html" class="dropdown-item" data-key="t-area">Area</a>
-                                                        <a href="charts-column.html" class="dropdown-item" data-key="t-column">Column</a>
-                                                        <a href="charts-bar.html" class="dropdown-item" data-key="t-bar">Bar</a>
-                                                        <a href="charts-mixed.html" class="dropdown-item" data-key="t-mixed">Mixed</a>
-                                                        <a href="charts-timeline.html" class="dropdown-item" data-key="t-timeline">Timeline</a>
-                                                        <a href="charts-candlestick.html" class="dropdown-item" data-key="t-candlestick">Candlestick</a>
-                                                        <a href="charts-boxplot.html" class="dropdown-item" data-key="t-boxplot">Boxplot</a>
-                                                        <a href="charts-bubble.html" class="dropdown-item" data-key="t-bubble">Bubble</a>
-                                                        <a href="charts-scatter.html" class="dropdown-item" data-key="t-scatter">Scatter</a>
-                                                        <a href="charts-heatmap.html" class="dropdown-item" data-key="t-heatmap">Heatmap</a>
-                                                        <a href="charts-treemap.html" class="dropdown-item" data-key="t-treemap">Treemap</a>
-                                                        <a href="charts-pie.html" class="dropdown-item" data-key="t-pie">Pie</a>
-                                                        <a href="charts-radialbar.html" class="dropdown-item" data-key="t-radialbar">Radialbar</a>
-                                                        <a href="charts-radar.html" class="dropdown-item" data-key="t-radar">Radar</a>
-                                                        <a href="charts-polararea.html" class="dropdown-item" data-key="t-polararea">Polararea</a>
-                                                    </div>
-                                                </div>
-                                                <a href="charts-echart.html" class="dropdown-item" data-key="t-e-charts">E Charts</a>
-                                                <a href="charts-chartjs.html" class="dropdown-item" data-key="t-chartjs-charts">Chartjs Charts</a>
-                                                <a href="charts-tui.html" class="dropdown-item" data-key="t-ui-charts">Toast UI Charts</a>
-                                            </div>
-                                        </div>
-
-                                        <div class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-icons" role="button">
-                                                <span data-key="t-icons">Icons</span>
-                                                <div class="arrow-down"></div>
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="topnav-icons">
-                                                <a href="icons-evaicons.html" class="dropdown-item" data-key="t-evaicons">Eva Icons</a>
-                                                <a href="icons-boxicons.html" class="dropdown-item" data-key="t-boxicons">Boxicons</a>
-                                                <a href="icons-materialdesign.html" class="dropdown-item" data-key="t-material-design">Material Design</a>
-                                                <a href="icons-fontawesome.html" class="dropdown-item" data-key="t-font-awesome">Font Awesome 5</a>
-                                            </div>
-                                        </div>
-                                        <div class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-map" role="button">
-                                                <span data-key="t-maps">Maps</span>
-                                                <div class="arrow-down"></div>
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="topnav-map">
-                                                <a href="maps-google.html" class="dropdown-item" data-key="t-google">Google</a>
-                                                <a href="maps-vector.html" class="dropdown-item" data-key="t-vector">Vector</a>
-                                                <a href="maps-leaflet.html" class="dropdown-item" data-key="t-leaflet">Leaflet</a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </li>
 
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-more" role="button">
-                                        <i class="icon nav-icon" data-eva="file-text-outline"></i>
-                                        <span data-key="t-pages">Pages</span>
-                                        <div class="arrow-down"></div>
+                                    <a class="nav-link dropdown-toggle arrow-none" href="{{route('admin.user.role')}}" id="topnav-components" role="button">
+                                        <i class="icon nav-icon" data-eva="archive-outline"></i>
+                                        <span>Roles</span>
+                                        {{-- <div class="arrow-down"></div> --}}
                                     </a>
-                                    <div class="dropdown-menu" aria-labelledby="topnav-more">
-                                        <div class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-authentication" role="button">
-                                                <span data-key="t-authentication">Authentication</span>
-                                                <div class="arrow-down"></div>
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="topnav-authentication">
-                                                <a href="auth-login.html" class="dropdown-item" data-key="t-login">Login</a>
-                                                <a href="auth-register.html" class="dropdown-item" data-key="t-register">Register</a>
-                                                <a href="auth-recoverpw.html" class="dropdown-item" data-key="t-recover-password">Recover Password</a>
-                                                <a href="auth-lock-screen.html" class="dropdown-item" data-key="t-lock-screen">Lock Screen</a>
-                                                <a href="{{ route('super.logout') }}" class="dropdown-item" data-key="t-logout">Logout</a>
-                                                <a href="auth-confirm-mail.html" class="dropdown-item" data-key="t-confirm-mail">Confirm Mail</a>
-                                                <a href="auth-email-verification.html" class="dropdown-item" data-key="t-email-verification">Email Verification</a>
-                                                <a href="auth-two-step-verification.html" class="dropdown-item" data-key="t-two-step-verification">Two Step Verification</a>
-                                            </div>
-                                        </div>
 
-                                        <div class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-utility" role="button">
-                                                <span data-key="t-utility">Utility</span>
-                                                <div class="arrow-down"></div>
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="topnav-utility">
-                                                <a href="pages-starter.html" class="dropdown-item" data-key="t-starter-page">Starter Page</a>
-                                                <a href="pages-maintenance.html" class="dropdown-item" data-key="t-maintenance">Maintenance</a>
-                                                <a href="pages-comingsoon.html" class="dropdown-item" data-key="t-coming-soon">Coming Soon</a>
-                                                <a href="pages-timeline.html" class="dropdown-item" data-key="t-timeline">Timeline</a>
-                                                <a href="pages-faqs.html" class="dropdown-item" data-key="t-faqs">FAQs</a>
-                                                <a href="pages-pricing.html" class="dropdown-item" data-key="t-pricing">Pricing</a>
-                                                <a href="pages-404.html" class="dropdown-item" data-key="t-error-404">Error 404</a>
-                                                <a href="pages-500.html" class="dropdown-item" data-key="t-error-500">Error 500</a>
-                                            </div>
-                                        </div>
-
-                                        <a href="layouts-horizontal.html" class="dropdown-item" data-key="t-horizontal">Horizontal</a>
-                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle arrow-none" href="{{route('admin.role.admin.index')}}" id="topnav-components" role="button">
+                                        <i class="mdi mdi-account-circle"></i>
+                                        <span>Compte {{$admin->enterprise->name_enterprise}}</span>
+                                        {{-- <div class="arrow-down"></div> --}}
+                                    </a>
+                            
                                 </li>
 
                             </ul>
@@ -1241,7 +1109,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-12">
-                            <script>document.write(new Date().getFullYear())</script> &copy; Borex. Design & Develop by Themesbrand
+                            <script>document.write(new Date().getFullYear())</script> &copy; OutInTraffic. Design & Develop by Themesbrand
                         </div>
                     </div>
                 </div>
@@ -1397,11 +1265,12 @@
     <script src="/back/assets/js/pages/dashboard.init.js"></script>
 
     <script src="/back/assets/js/app.js"></script>
+    
 
     @stack('scripts')
 
 </body>
 
 
-<!-- Mirrored from themesbrand.com/borex/layouts/layouts-horizontal-dark.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Mar 2024 18:28:01 GMT -->
+<!-- Mirrored from themesbrand.com/OutInTraffic/layouts/layouts-horizontal-dark.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 11 Mar 2024 18:28:01 GMT -->
 </html>

@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('functionals', function (Blueprint $table) {
             $table->id();
+            $table->string('label_functional')->unique();
+            $table->string('describ_functional')->nullable();
+
+            $table->unsignedBigInteger('admin_id')->nullable();
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
+
+            $table->unsignedBigInteger('superadmin_id')->nullable();
+            $table->foreign('superadmin_id')->references('id')->on('superadmins')->onDelete('cascade');
             $table->timestamps();
         });
     }

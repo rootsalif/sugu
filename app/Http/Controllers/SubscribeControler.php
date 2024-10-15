@@ -17,7 +17,7 @@ class SubscribeControler extends Controller
     public function index()
     {
         $subscribes=Subscribe::all();
-        $admins=Admin::all();
+        $admins=Admin::where('status_admin', '!=','desable')->get();
         return view('back.pages.super.subscribe', compact('subscribes','admins'));
     }
 

@@ -21,7 +21,7 @@
         <!-- App Css-->
         <link href="/back/assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
 
-        @stack('stylesheet')
+        @stack('stylesheets')
     </head>
 
    <body>

@@ -14,8 +14,9 @@
                                 <div class="d-flex flex-column h-100">
                                     <div class="mb-4 mb-md-5">
                                         <a href="index.html" class="d-block auth-logo">
-                                            <img src="/back/assets/images/logo-dark.png" alt="" height="22" class="auth-logo-dark me-start">
-                                            <img src="/back/assets/images/logo-light.png" alt="" height="22" class="auth-logo-light me-start">
+                                            <h2 class="text-center text-info">OutInTraffic</h2>
+                                            {{-- <img src="/back/assets/images/logo-dark.png" alt="" height="22" class="auth-logo-dark me-start">
+                                            <img src="/back/assets/images/logo-light.png" alt="" height="22" class="auth-logo-light me-start"> --}}
                                         </a>
                                     </div>
                                     <div class="auth-content my-auto">
@@ -70,14 +71,14 @@
 
 
                                             <div class="row mb-4">
-                                                <div class="col">
+                                                {{-- <div class="col">
                                                     <div class="form-check font-size-15">
                                                         <input class="form-check-input" type="checkbox" id="remember-check">
                                                         <label class="form-check-label font-size-13" for="remember-check">
                                                             Remember me
                                                         </label>
                                                     </div>
-                                                </div>
+                                                </div> --}}
 
                                             </div>
                                             <div class="mb-3">
@@ -104,12 +105,12 @@
                                         </div> --}}
 
                                         <div class="mt-4 pt-3 text-center">
-                                            <p class="text-muted mb-0">êtes vous employer ? <a href="{{ route('user.login') }}"
+                                            <p class="text-muted mb-0">êtes vous employer ? <a href="{{ route('user.enterprise.accueil') }}"
                                                 class="text-primary fw-semibold"> Joindre votre Entreprise </a> </p>
                                         </div>
                                     </div>
                                     <div class="mt-4 text-center">
-                                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> Sugu   . Consus <i class="mdi mdi-heart text-danger"></i> pour aider</p>
+                                        <p class="mb-0">© <script>document.write(new Date().getFullYear())</script> OutInTraffic   . Consus <i class="mdi mdi-heart text-danger"></i> pour aider</p>
                                     </div>
                                 </div>
                             </div>

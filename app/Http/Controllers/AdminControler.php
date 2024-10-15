@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Enterprise;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,10 +44,23 @@ class AdminControler extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
+            
             return redirect()->route('admin.home');
         }
 
         return back()->withErrors(['email' => 'Invalid credentials']);
+    }
+
+    public function home(){
+        $admin=Auth::guard('admin')->user();
+        $enterprise=Enterprise::findOrfail($admin->id);
+        if(session()->has('key')){
+            Auth::logout();
+            session()->forget('key');
+            return redirect()->route('admin.login');
+        }
+        
+        return view('back.pages.admin.home', compact('admin', 'enterprise'));
     }
 
     public function logout()
